@@ -1,0 +1,31 @@
+name: GitHub Metrics
+
+on:
+  push:
+    branches:
+      - master
+      - main
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  github-metrics:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment:
+      name: production
+    permissions:
+      contents: write
+
+    steps:
+      - uses: lowlighter/metrics@latest
+        with:
+          token: ${{ secrets.METRICS_TOKEN }}
+
+      - name: Send Notification
+        uses: matidev/notify-action@v1
+        if: ${{ success() }}
+        with:
+          notifyUrl: ${{ secrets.NOTIFY_URL }}
+          notifyKey: ${{ secrets.NOTIFY_KEY }}
