@@ -24,7 +24,7 @@ jobs:
           token: ${{ secrets.METRICS_TOKEN }}
 
       - name: Send Notification
-        uses: matidev/notify-action@v1
+        uses: matidev/notify-action@latest
         if: ${{ success() }}
         with:
           notifyUrl: ${{ secrets.NOTIFY_URL }}
